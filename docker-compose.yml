@@ -1,0 +1,13 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi_server
+    ports:
+      - "8000:8000"
+    env_file:
+      - .envs/.env
+    restart: always
+    volumes:
+      - .:/src
