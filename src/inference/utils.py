@@ -12,28 +12,26 @@ Required Args
        'Listening_Time_minutes']
 """
 
+import numpy as np
 
-# def make_ftre(X: pd.DataFrame):
-#     "This function makes secondary features from the provided data"
+def make_ftre(data) -> dict:
+    pub_datetime = f"{data.pub_day}-{data.pub_day_time}"
+    num_ads = min(max(data.nums_of_ads, 0), 3)
 
-#     df = X.copy()
+    guest_pop_int = int(np.floor(data.guest_popu_percentage))
+    guest_pop_dec = data.guest_popu_percentage - guest_pop_int
 
-#     df["Pub_DateTime"] = (
-#         df["Publication_Day"].astype("string")
-#         + "-"
-#         + df["Publication_Time"].astype("string")
-#     )
-#     df["Number_of_Ads"] = df["Number_of_Ads"].fillna(0).clip(0, 3).astype(np.uint8)
-#     df["GuestPop_Int"] = df["Guest_Popularity_percentage"].fillna(-1).astype(np.int16)
-#     df["GuestPop_Dec"] = (
-#         df["Guest_Popularity_percentage"] - df["GuestPop_Int"]
-#     ).fillna(-1)
-#     df["Total_Pop"] = (
-#         df["Guest_Popularity_percentage"] + df["Host_Popularity_percentage"]
-#     )
-#     df["Diff_Pop"] = (
-#         df["Guest_Popularity_percentage"] - df["Host_Popularity_percentage"]
-#     )
-#     df["TotalPop_vs_Ads"] = np.log1p(df["Total_Pop"]) - np.log1p(df["Number_of_Ads"])
+    total_pop = data.guest_popu_percentage + data.host_popu_percentage
+    diff_pop = data.guest_popu_percentage - data.host_popu_percentage
 
-#     return df
+    totalpop_vs_ads = np.log1p(total_pop) - np.log1p(num_ads)
+
+    return {
+        "Pub_DateTime": pub_datetime,
+        "Number_of_Ads": np.uint8(num_ads),
+        "GuestPop_Int": np.int16(guest_pop_int),
+        "GuestPop_Dec": guest_pop_dec,
+        "Total_Pop": total_pop,
+        "Diff_Pop": diff_pop,
+        "TotalPop_vs_Ads": totalpop_vs_ads,
+    }
