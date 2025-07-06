@@ -1,0 +1,9 @@
+.envs
+.ruff_cache
+.vscode
+venv
+scripts
+LICENSE
+README.md
+.pre-commit-config.yaml
+.gitignore
