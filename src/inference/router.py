@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse  # <- use this instead
+import traceback
 
-from inference.dependency import predict_watch_time
+from src.inference.dependency import predict_watch_time
 from src.inference.schema import VideoData
 
 
@@ -11,13 +13,12 @@ router = APIRouter(tags=["podalyze"])
 def analyze(data: VideoData):
     try:
         res = predict_watch_time(data)
-        return Response(
-            status_code=200,
-            content={"watch_time": res},
-            media_type="application/json"
-        )
+        return JSONResponse(status_code=200, content={"watch_time": res})
     except Exception as e:
-        return Response(
+        print(traceback.format_exc())
+        return JSONResponse(
             status_code=500,
-            detail=f"An error occurred while processing the video: {str(e)}"
+            content={
+                "error": f"An error occurred while processing the video: {str(e)}"
+            },
         )

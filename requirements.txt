@@ -3,3 +3,8 @@ httpx==0.28.1
 pydantic-settings==2.10.1
 uvicorn==0.35.0
 numpy==2.3.1
+joblib==1.5.1
+scikit-learn==1.7.0
+catboost==1.2.8
+xgboost==3.0.2
+pandas==2.3.0
