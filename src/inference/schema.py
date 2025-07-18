@@ -32,3 +32,8 @@ class VideoData(BaseModel):
     nums_of_ads: int = Field(..., ge=0)
 
     episode_sentiment: Literal["Positive", "Neutral", "Negative"]
+
+
+class ProjectData(BaseModel):
+    title: str
+    url: str
