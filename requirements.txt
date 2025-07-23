@@ -9,4 +9,5 @@ catboost==1.2.8
 xgboost==3.0.2
 pandas==2.3.0
 google-api-python-client==2.176.0
+youtube-transcript-api==1.2.1
 isodate==0.7.2

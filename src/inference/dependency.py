@@ -7,8 +7,7 @@ from src.inference.helpers.youtube_helper import YoutubeAPIManager
 
 def fetch_video_data(url):
     youtube_api_manager = YoutubeAPIManager(url)
-    # result = youtube_api_manager.main()
-    result = youtube_api_manager.fetch_transcript()
+    result = youtube_api_manager.main()
     return result
 
 
