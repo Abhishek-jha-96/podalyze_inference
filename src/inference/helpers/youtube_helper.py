@@ -53,12 +53,10 @@ class YoutubeAPIManager:
             handler = YouTubeTranscriptApi()
             transcript_data = handler.fetch(video_id=self.video_id)
             quater_duration = round(self.duration.total_seconds() / 4)
-            print(len(transcript_data))
             filtered_data = [
                         snippet for snippet in transcript_data 
                         if snippet.start <= quater_duration
                     ]
-            print(len(filtered_data))
             full_text = ' '.join([snippet.text for snippet in filtered_data])
             return full_text
         except Exception as e:
@@ -67,7 +65,6 @@ class YoutubeAPIManager:
 
     def main(self,):
         publish_date = self.publication_data
-        print(self.publication_data)
         publish_date = datetime.strptime(publish_date, "%Y-%m-%dT%H:%M:%SZ")
         pub_day = publish_date.strftime("%A")
         hour = publish_date.hour
@@ -89,12 +86,10 @@ class YoutubeAPIManager:
             "podcast_name": self.author,
             "episode_title": self.title,
             "episode_length": episode_length,  # in minutes
-            # "genre": genre,
             # "host_popu_percentage": round(random.uniform(50, 100), 2),
             "pub_day": pub_day,
             "pub_day_time": pub_day_time,
             # "guest_popu_percentage": round(random.uniform(0, 50), 2),
             # "nums_of_ads": random.randint(0, 5),
-            # "episode_sentiment": episode_sentiment,
             "transcript": transcript
         }

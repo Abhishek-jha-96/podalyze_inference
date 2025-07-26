@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str
     DEVELOPER_KEY: str
     OAUTH_CRED: str
+    HF_TOKEN: str
 
     BACKEND_CORS_ORIGINS: Annotated[
         list[AnyUrl] | str, BeforeValidator(parse_cors)
