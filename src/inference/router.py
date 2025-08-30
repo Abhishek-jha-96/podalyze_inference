@@ -4,6 +4,7 @@ import traceback
 
 from src.inference.dependency import fetch_video_data, predict_watch_time
 from src.inference.schema import ProjectData
+from src.inference.tasks import podcast_data_inference
 
 
 router = APIRouter(tags=["podalyze"])
@@ -12,10 +13,9 @@ router = APIRouter(tags=["podalyze"])
 @router.post("/analyze")
 def analyze(data: ProjectData):
     try:
-        video_data = fetch_video_data(data.url)
-        res = predict_watch_time(video_data)
-        video_data["avg_watch_time"] = res
-        return JSONResponse(status_code=200, content={"video_data": video_data})
+        args = data.model_dumps()
+        podcast_data_inference.delay(args)
+        return JSONResponse(status_code=200, content={"message": "Podcast analysis task submitted."})
     except Exception as e:
         print(traceback.format_exc())
         return JSONResponse(
