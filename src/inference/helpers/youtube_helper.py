@@ -86,10 +86,7 @@ class YoutubeAPIManager:
             "podcast_name": self.author,
             "episode_title": self.title,
             "episode_length": episode_length,  # in minutes
-            # "host_popu_percentage": round(random.uniform(50, 100), 2),
             "pub_day": pub_day,
             "pub_day_time": pub_day_time,
-            # "guest_popu_percentage": round(random.uniform(0, 50), 2),
-            # "nums_of_ads": random.randint(0, 5),
             "transcript": transcript
         }

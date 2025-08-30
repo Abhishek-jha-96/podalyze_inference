@@ -1,0 +1,37 @@
+services:
+  inference:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: podalyze_inference
+    env_file:
+      - .envs/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    restart: always
+    volumes:
+      - inference_data:/src:Z
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: podalyze_celery
+    env_file:
+      - .envs/.env
+    depends_on:
+      - redis
+    restart: always
+    command: python3 -m celery -A src.config.celery.app worker --loglevel=INFO
+
+  redis:
+    image: redis:7-alpine
+    container_name: podalyze_redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  inference_data:

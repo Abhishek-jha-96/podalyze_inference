@@ -13,7 +13,8 @@ router = APIRouter(tags=["podalyze"])
 def analyze(data: ProjectData):
     try:
         video_data = fetch_video_data(data.url)
-        # res = predict_watch_time(video_data)
+        res = predict_watch_time(video_data)
+        video_data["avg_watch_time"] = res
         return JSONResponse(status_code=200, content={"video_data": video_data})
     except Exception as e:
         print(traceback.format_exc())

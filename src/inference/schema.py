@@ -37,3 +37,6 @@ class VideoData(BaseModel):
 class ProjectData(BaseModel):
     title: str
     url: str
+    host_popularity: int
+    guest_popularity: int
+    number_of_ads: int
