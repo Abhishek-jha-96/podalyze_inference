@@ -16,7 +16,7 @@ def fetch_video_data(url):
     genre = nlp_data["genre"]
     sentiment = nlp_data["sentiment"]
     result["genre"] = genre
-    result["sentiment"] = sentiment
+    result["episode_sentiment"] = sentiment
     return result
 
 

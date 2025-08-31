@@ -11,8 +11,6 @@ services:
     depends_on:
       - redis
     restart: always
-    volumes:
-      - inference_data:/src:Z
 
   celery:
     build:
@@ -32,6 +30,3 @@ services:
     restart: always
     ports:
       - "6379:6379"
-
-volumes:
-  inference_data:

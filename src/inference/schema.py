@@ -40,3 +40,5 @@ class ProjectData(BaseModel):
     host_popularity: int
     guest_popularity: int
     number_of_ads: int
+    task_id: str
+    user_id: str

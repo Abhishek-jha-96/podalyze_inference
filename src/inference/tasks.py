@@ -16,11 +16,11 @@ def podcast_data_inference(data: dict):
 
     video_data = fetch_video_data(url)
 
-    video_data["host_popularity"] = host_popularity
-    video_data["guest_popularity"] = guest_popularity
-    video_data["number_of_ads"] = number_of_ads
+    video_data["host_popu_percentage"] = host_popularity
+    video_data["guest_popu_percentage"] = guest_popularity
+    video_data["nums_of_ads"] = number_of_ads
     
     res = predict_watch_time(video_data)
     video_data["avg_watch_time"] = res
-
+    print(video_data)
     update_video_data(video_data, task_id, user_id)
