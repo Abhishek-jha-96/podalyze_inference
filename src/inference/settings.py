@@ -1,7 +1,7 @@
 from os import environ
 
 
-MODEL_DIR = "src/data/"
+MODEL_DIR = "src/models/"
 GENRES = ["Health",
         "True Crime",
         "News",

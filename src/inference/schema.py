@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class VideoData(BaseModel):
@@ -35,10 +35,18 @@ class VideoData(BaseModel):
 
 
 class ProjectData(BaseModel):
-    title: str
-    url: str
-    host_popularity: int
-    guest_popularity: int
-    number_of_ads: int
-    task_id: str
-    user_id: str
+    title: str = Field(..., min_length=1)
+    url: HttpUrl
+    host_popularity: int = Field(..., ge=0)
+    guest_popularity: int = Field(..., ge=0)
+    number_of_ads: int = Field(..., ge=0)
+    task_id: str = Field(..., min_length=1)
+    user_id: str = Field(..., min_length=1)
+
+
+class AnalyzeResponse(BaseModel):
+    message: str
+
+
+class AnalyzeErrorResponse(BaseModel):
+    error: str

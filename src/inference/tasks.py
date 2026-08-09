@@ -1,26 +1,22 @@
 from src.config.celery import app
 from src.inference.dependency import fetch_video_data, predict_watch_time
 from src.inference.helpers.task_helpers import update_video_data
+from src.inference.schema import ProjectData, VideoData
 
 
 @app.task
 def podcast_data_inference(data: dict):
-    url = data.get("url")
+    project = ProjectData.model_validate(data)
 
-    host_popularity = data.get("host_popularity")
-    guest_popularity = data.get("guest_popularity")
-    number_of_ads = data.get("number_of_ads")
+    video_data = fetch_video_data(str(project.url))
 
-    task_id = data.get("task_id")
-    user_id = data.get("user_id")
+    video_data["host_popu_percentage"] = project.host_popularity
+    video_data["guest_popu_percentage"] = project.guest_popularity
+    video_data["nums_of_ads"] = project.number_of_ads
 
-    video_data = fetch_video_data(url)
+    validated = VideoData.model_validate(video_data)
 
-    video_data["host_popu_percentage"] = host_popularity
-    video_data["guest_popu_percentage"] = guest_popularity
-    video_data["nums_of_ads"] = number_of_ads
-    
-    res = predict_watch_time(video_data)
-    video_data["avg_watch_time"] = res
+    watch_time = predict_watch_time(validated.model_dump())
+    video_data["avg_watch_time"] = watch_time
     print(video_data)
-    update_video_data(video_data, task_id, user_id)
+    update_video_data(video_data, project.task_id, project.user_id)
