@@ -18,5 +18,5 @@ def podcast_data_inference(data: dict):
 
     watch_time = predict_watch_time(validated.model_dump())
     video_data["avg_watch_time"] = watch_time
-    print(video_data)
+    # print(video_data)
     update_video_data(video_data, project.task_id, project.user_id)
